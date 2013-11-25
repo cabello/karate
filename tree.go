@@ -2,25 +2,29 @@ package karate
 
 import "math"
 
-type Tree struct {
+type TreeChopper struct {
+	tree *tree
+}
+
+type tree struct {
 	index int
 	value int
-	left  *Tree
-	right *Tree
+	left  *tree
+	right *tree
 }
 
-func TreeChopper(haystack []int) Chopper {
-	return buildTree(haystack, 0)
+func (t *TreeChopper) Init(haystack []int) {
+	t.tree = buildTree(haystack, 0)
 }
 
-func buildTree(haystack []int, extraOffset int) *Tree {
+func buildTree(haystack []int, extraOffset int) *tree {
 	if len(haystack) == 0 {
 		return nil
 	}
 
 	offset := int(math.Floor(float64(len(haystack) / 2)))
 
-	tree := &Tree{
+	tree := &tree{
 		index: extraOffset + offset,
 		value: haystack[offset],
 	}
@@ -32,18 +36,16 @@ func buildTree(haystack []int, extraOffset int) *Tree {
 	return tree
 }
 
-func (t *Tree) Chop(needle int) int {
-	tree := t
-
+func (t *TreeChopper) Chop(needle int) int {
 	for {
-		if tree == nil {
+		if t.tree == nil {
 			return -1
-		} else if tree.value == needle {
-			return tree.index
-		} else if tree.value < needle {
-			tree = tree.right
-		} else if tree.value > needle {
-			tree = tree.left
+		} else if t.tree.value == needle {
+			return t.tree.index
+		} else if t.tree.value < needle {
+			t.tree = t.tree.right
+		} else if t.tree.value > needle {
+			t.tree = t.tree.left
 		}
 	}
 }

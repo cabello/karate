@@ -2,15 +2,15 @@ package karate
 
 import "math"
 
-type iterativeChopper struct {
+type IterativeChopper struct {
 	haystack []int
 }
 
-func IterativeChopper(haystack []int) Chopper {
-	return &iterativeChopper{haystack}
+func (i *IterativeChopper) Init(haystack []int) {
+	i.haystack = haystack
 }
 
-func (i *iterativeChopper) Chop(needle int) int {
+func (i *IterativeChopper) Chop(needle int) int {
 	extraOffset := 0
 
 	for {

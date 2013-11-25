@@ -1,14 +1,14 @@
 package karate
 
-type traditionalChopper struct {
+type TraditionalChopper struct {
 	haystack []int
 }
 
-func TraditionalChopper(haystack []int) Chopper {
-	return &traditionalChopper{haystack}
+func (t *TraditionalChopper) Init(haystack []int) {
+	t.haystack = haystack
 }
 
-func (t *traditionalChopper) Chop(needle int) int {
+func (t *TraditionalChopper) Chop(needle int) int {
 	low := 0
 	high := len(t.haystack) - 1
 
