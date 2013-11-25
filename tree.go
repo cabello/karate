@@ -9,8 +9,8 @@ type Tree struct {
 	right *Tree
 }
 
-func TreeChopper() Chopper {
-	return &Tree{}
+func TreeChopper(haystack []int) Chopper {
+	return buildTree(haystack, 0)
 }
 
 func buildTree(haystack []int, extraOffset int) *Tree {
@@ -32,8 +32,8 @@ func buildTree(haystack []int, extraOffset int) *Tree {
 	return tree
 }
 
-func (*Tree) Chop(needle int, haystack []int) int {
-	tree := buildTree(haystack, 0)
+func (t *Tree) Chop(needle int) int {
+	tree := t
 
 	for {
 		if tree == nil {

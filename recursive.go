@@ -2,14 +2,16 @@ package karate
 
 import "math"
 
-type recursiveChopper struct {}
-
-func RecursiveChopper() Chopper {
-	return &recursiveChopper{}
+type recursiveChopper struct {
+	haystack []int
 }
 
-func (*recursiveChopper) Chop(needle int, haystack []int) int {
-	index, found := recursiveChop(needle, haystack, 0)
+func RecursiveChopper(haystack []int) Chopper {
+	return &recursiveChopper{haystack}
+}
+
+func (r *recursiveChopper) Chop(needle int) int {
+	index, found := recursiveChop(needle, r.haystack, 0)
 	if !found {
 		return -1
 	}

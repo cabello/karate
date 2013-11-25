@@ -1,19 +1,21 @@
 package karate
 
-type traditionalChopper struct {}
-
-func TraditionalChopper() Chopper {
-	return &traditionalChopper{}
+type traditionalChopper struct {
+	haystack []int
 }
 
-func (*traditionalChopper) Chop(needle int, haystack []int) int {
+func TraditionalChopper(haystack []int) Chopper {
+	return &traditionalChopper{haystack}
+}
+
+func (t *traditionalChopper) Chop(needle int) int {
 	low := 0
-	high := len(haystack) - 1
+	high := len(t.haystack) - 1
 
 	for high-low >= 0 {
 		middle := low + ((high - low) / 2)
 
-		switch item := haystack[middle]; {
+		switch item := t.haystack[middle]; {
 		case item == needle:
 			return middle
 		case item > needle:

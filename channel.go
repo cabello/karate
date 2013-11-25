@@ -1,15 +1,17 @@
 package karate
 
-type channelChopper struct {}
-
-func ChannelChopper() Chopper {
-	return &channelChopper{}
+type channelChopper struct {
+	haystack []int
 }
 
-func (*channelChopper) Chop(needle int, haystack []int) int {
+func ChannelChopper(haystack [] int) Chopper {
+	return &channelChopper{haystack}
+}
+
+func (c *channelChopper) Chop(needle int) int {
 	index := make(chan int)
 
-	go channelChop(needle, haystack, index, 0, len(haystack)-1)
+	go channelChop(needle, c.haystack, index, 0, len(c.haystack)-1)
 
 	return <-index
 }

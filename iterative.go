@@ -2,31 +2,33 @@ package karate
 
 import "math"
 
-type iterativeChopper struct {}
-
-func IterativeChopper() Chopper {
-	return &iterativeChopper{}
+type iterativeChopper struct {
+	haystack []int
 }
 
-func (*iterativeChopper) Chop(needle int, haystack []int) int {
+func IterativeChopper(haystack []int) Chopper {
+	return &iterativeChopper{haystack}
+}
+
+func (i *iterativeChopper) Chop(needle int) int {
 	extraOffset := 0
 
 	for {
-		if len(haystack) == 0 {
+		if len(i.haystack) == 0 {
 			return -1
 		}
 
-		offset := int(math.Floor(float64(len(haystack) / 2)))
+		offset := int(math.Floor(float64(len(i.haystack) / 2)))
 
-		switch item := haystack[offset]; {
+		switch item := i.haystack[offset]; {
 		case item == needle:
 			return extraOffset + offset
 		case item > needle:
-			haystack = haystack[:offset]
+			i.haystack = i.haystack[:offset]
 		case item < needle:
 			offset++
 			extraOffset += offset
-			haystack = haystack[offset:]
+			i.haystack = i.haystack[offset:]
 		}
 	}
 }
