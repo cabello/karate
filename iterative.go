@@ -2,7 +2,13 @@ package karate
 
 import "math"
 
-func IterativeChop(needle int, haystack []int) int {
+type iterativeChopper struct {}
+
+func IterativeChopper() Chopper {
+	return &iterativeChopper{}
+}
+
+func (*iterativeChopper) Chop(needle int, haystack []int) int {
 	extraOffset := 0
 
 	for {

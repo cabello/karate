@@ -1,6 +1,12 @@
 package karate
 
-func TraditionalChop(needle int, haystack []int) int {
+type traditionalChopper struct {}
+
+func TraditionalChopper() Chopper {
+	return &traditionalChopper{}
+}
+
+func (*traditionalChopper) Chop(needle int, haystack []int) int {
 	low := 0
 	high := len(haystack) - 1
 
